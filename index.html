@@ -220,6 +220,7 @@
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
+            z-index: 1002;
         }
 
         .menu-toggle span {
@@ -227,6 +228,44 @@
             height: 2px;
             background: var(--text-primary);
             transition: 0.3s;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Mobile Menu Open State */
+        .nav-links.active {
+            display: flex !important;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-primary);
+            padding: 1rem 2rem;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Hero Section */
@@ -1975,6 +2014,33 @@
 
         // Update nav on scroll
         window.addEventListener('scroll', updateNavBackground);
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close menu when clicking a link
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                    menuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+        }
     </script>
 </body>
 </html>
