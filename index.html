@@ -76,6 +76,75 @@
             animation: float 10s ease-in-out infinite reverse;
         }
 
+        /* Technology Grid Background */
+        .tech-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(var(--accent) 1px, transparent 1px),
+                linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* Floating Tech Particles */
+        .tech-particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.3;
+            animation: floatParticle 15s linear infinite;
+        }
+
+        .tech-particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+        .tech-particle:nth-child(2) { left: 20%; top: 80%; animation-delay: 2s; }
+        .tech-particle:nth-child(3) { left: 30%; top: 40%; animation-delay: 4s; }
+        .tech-particle:nth-child(4) { left: 50%; top: 60%; animation-delay: 6s; }
+        .tech-particle:nth-child(5) { left: 70%; top: 30%; animation-delay: 8s; }
+        .tech-particle:nth-child(6) { left: 80%; top: 70%; animation-delay: 10s; }
+        .tech-particle:nth-child(7) { left: 90%; top: 50%; animation-delay: 12s; }
+        .tech-particle:nth-child(8) { left: 40%; top: 90%; animation-delay: 14s; }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        /* Code Symbols Floating */
+        .code-symbol {
+            position: fixed;
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            color: var(--accent);
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatSymbol 20s ease-in-out infinite;
+        }
+
+        .code-symbol:nth-child(9) { left: 5%; top: 30%; animation-delay: 0s; }
+        .code-symbol:nth-child(10) { left: 15%; top: 70%; animation-delay: 3s; }
+        .code-symbol:nth-child(11) { left: 25%; top: 50%; animation-delay: 6s; }
+        .code-symbol:nth-child(12) { left: 60%; top: 20%; animation-delay: 9s; }
+        .code-symbol:nth-child(13) { left: 75%; top: 80%; animation-delay: 12s; }
+        .code-symbol:nth-child(14) { left: 85%; top: 40%; animation-delay: 15s; }
+
+        @keyframes floatSymbol {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
         @keyframes float {
             0%, 100% { transform: translate(0, 0) scale(1); }
             50% { transform: translate(30px, -30px) scale(1.1); }
@@ -276,6 +345,7 @@
 
         .hero-image {
             position: relative;
+            perspective: 1000px;
         }
 
         .hero-image img {
@@ -284,6 +354,39 @@
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             border: 2px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: grab;
+        }
+
+        .hero-image img:hover {
+            box-shadow: 0 30px 80px rgba(99, 102, 241, 0.4);
+        }
+
+        .hero-image img:active {
+            cursor: grabbing;
+        }
+
+        .hero-image .tilt-effect {
+            transform-style: preserve-3d;
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 25px;
+            background: linear-gradient(45deg, var(--gradient-1), var(--gradient-2), var(--gradient-3));
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+            filter: blur(20px);
+        }
+
+        .hero-image:hover::before {
+            opacity: 0.5;
         }
 
         .hero-placeholder {
@@ -629,6 +732,17 @@
             font-size: 3rem;
             position: relative;
             overflow: hidden;
+        }
+
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .project-card:hover .project-img {
+            transform: scale(1.1);
         }
 
         .project-image::before {
@@ -989,6 +1103,80 @@
             border: none;
         }
 
+        /* Day/Night Mode Toggle */
+        .mode-toggle {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1001;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .mode-toggle:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 20px var(--accent-glow);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .mode-toggle svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--text-primary);
+            transition: fill 0.3s;
+        }
+
+        .mode-toggle:hover svg {
+            fill: var(--accent);
+        }
+
+        /* Light Mode Variables */
+        body.light-mode {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a5a;
+            --border: #e0e0e0;
+            --accent-glow: rgba(99, 102, 241, 0.2);
+        }
+
+        body.light-mode .bg-animation::before {
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1), transparent 70%);
+        }
+
+        body.light-mode .bg-animation::after {
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1), transparent 70%);
+        }
+
+        body.light-mode .tech-grid {
+            opacity: 0.05;
+        }
+
+        body.light-mode .tech-particle,
+        body.light-mode .code-symbol {
+            opacity: 0.15;
+        }
+
+        body.light-mode nav {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        body.light-mode .mode-toggle {
+            background: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
         /* Responsive Design */
         @media (max-width: 968px) {
             .hero-container {
@@ -1068,6 +1256,31 @@
 </head>
 <body>
     <div class="bg-animation"></div>
+    <div class="tech-grid"></div>
+    
+    <!-- Floating Tech Particles -->
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+    
+    <!-- Floating Code Symbols -->
+    <div class="code-symbol">&lt;/&gt;</div>
+    <div class="code-symbol">{ }</div>
+    <div class="code-symbol">[ ]</div>
+    <div class="code-symbol">( )</div>
+    <div class="code-symbol">;</div>
+    <div class="code-symbol">=&gt;</div>
+
+    <!-- Day/Night Mode Toggle -->
+    <button class="mode-toggle" id="modeToggle" onclick="toggleMode()" title="Toggle Light/Dark Mode">
+        <svg id="sunIcon" viewBox="0 0 24 24" style="display:none"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM5.99 17.95c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06z"/></svg>
+        <svg id="moonIcon" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+    </button>
 
     <nav>
         <div class="nav-container">
@@ -1305,7 +1518,7 @@
             </div>
             <div class="projects-grid fade-in">
                 <div class="project-card">
-                    <div class="project-image"><span class="project-icon">B4U</span></div>
+                    <div class="project-image"><img src="portfolio_files_only/gipeso.png" alt="B4U Burgers - GIPESO" class="project-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"><span class="project-icon" style="display:none">B4U</span></div>
                     <div class="project-content">
                         <span class="project-tag">Web Application</span>
                         <h3 class="project-title">B4U Burgers - GIPESO</h3>
@@ -1318,7 +1531,7 @@
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-image"><span class="project-icon">TURISCOPE</span></div>
+                    <div class="project-image"><img src="portfolio_files_only/turiscope.png" alt="TURISCOPE" class="project-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"><span class="project-icon" style="display:none">TURISCOPE</span></div>
                     <div class="project-content">
                         <span class="project-tag">Capstone Project</span>
                         <h3 class="project-title">TURISCOPE</h3>
@@ -1332,7 +1545,7 @@
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-image"><span class="project-icon">PGS</span></div>
+                    <div class="project-image"><img src="portfolio_files_only/PGS.png" alt="PGS" class="project-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"><span class="project-icon" style="display:none">PGS</span></div>
                     <div class="project-content">
                         <span class="project-tag">Internal System</span>
                         <h3 class="project-title">PGS - Performance Governance System</h3>
@@ -1345,7 +1558,7 @@
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-image"><span class="project-icon">ISO</span></div>
+                    <div class="project-image"><img src="portfolio_files_only/ISO.png" alt="ISO" class="project-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"><span class="project-icon" style="display:none">ISO</span></div>
                     <div class="project-content">
                         <span class="project-tag">Internal System</span>
                         <h3 class="project-title">ISO Document System</h3>
@@ -1411,10 +1624,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="certificate-card">
-                    <div class="certificate-placeholder">
+                <div class="certificate-card has-image" onclick="openLightbox('portfolio_files_only/certificate4.png')">
+                    <img src="portfolio_files_only/certificate4.png" alt="Google DevFest Baguio" class="certificate-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="certificate-placeholder" style="display:none">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-                        <span>Certificate Pending</span>
+                        <span>Certificate Image</span>
                     </div>
                     <div class="certificate-content">
                         <h3 class="certificate-title">Google DevFest Baguio</h3>
@@ -1450,10 +1664,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="certificate-card">
-                    <div class="certificate-placeholder">
+                <div class="certificate-card has-image" onclick="openLightbox('portfolio_files_only/certificate7.png')">
+                    <img src="portfolio_files_only/certificate7.png" alt="PICSPro's Cybersecurity Conference" class="certificate-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="certificate-placeholder" style="display:none">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-                        <span>Certificate Available</span>
+                        <span>Certificate Image</span>
                     </div>
                     <div class="certificate-content">
                         <h3 class="certificate-title">PICSPro's Cybersecurity Conference and Chapter Installation</h3>
@@ -1621,16 +1836,6 @@
             });
         });
 
-        // Navbar background on scroll
-        const nav = document.querySelector('nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                nav.style.background = 'rgba(10, 10, 15, 0.98)';
-            } else {
-                nav.style.background = 'rgba(10, 10, 15, 0.9)';
-            }
-        });
-
         // Toggle Personal Info
         function togglePersonalInfo(button) {
             const container = document.getElementById('personalInfo');
@@ -1646,6 +1851,130 @@
                 button.querySelector('span:first-child').textContent = 'Hide Personal Details';
             }
         }
+
+        // Interactive Hero Image - 3D Tilt Effect
+        const heroImage = document.querySelector('.hero-image img');
+        if (heroImage) {
+            let isDragging = false;
+            let startX, startY;
+            
+            heroImage.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                heroImage.style.cursor = 'grabbing';
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                
+                const rect = heroImage.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                const deltaX = (e.clientX - centerX) / 10;
+                const deltaY = (e.clientY - centerY) / 10;
+                
+                const maxRotation = 15;
+                const rotateY = Math.max(-maxRotation, Math.min(maxRotation, deltaX));
+                const rotateX = Math.max(-maxRotation, Math.min(maxRotation, -deltaY));
+                
+                heroImage.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+            });
+            
+            document.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    heroImage.style.cursor = 'grab';
+                    heroImage.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+                }
+            });
+            
+            // Hover effect without dragging
+            heroImage.addEventListener('mousemove', (e) => {
+                if (isDragging) return;
+                
+                const rect = heroImage.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                heroImage.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${-rotateY}deg) scale(1.02)`;
+            });
+            
+            heroImage.addEventListener('mouseleave', () => {
+                if (!isDragging) {
+                    heroImage.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+                }
+            });
+        }
+
+        // Day/Night Mode Toggle
+        function toggleMode() {
+            const body = document.body;
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            
+            body.classList.toggle('light-mode');
+            
+            if (body.classList.contains('light-mode')) {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+                localStorage.setItem('mode', 'light');
+            } else {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+                localStorage.setItem('mode', 'dark');
+            }
+            
+            // Update navbar background based on mode
+            updateNavBackground();
+        }
+
+        // Check saved mode preference
+        function checkModePreference() {
+            const savedMode = localStorage.getItem('mode');
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            
+            if (savedMode === 'light') {
+                document.body.classList.add('light-mode');
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+
+        // Update navbar background based on scroll and mode
+        function updateNavBackground() {
+            const nav = document.querySelector('nav');
+            const isLightMode = document.body.classList.contains('light-mode');
+            
+            if (window.scrollY > 100) {
+                if (isLightMode) {
+                    nav.style.background = 'rgba(255, 255, 255, 0.98)';
+                } else {
+                    nav.style.background = 'rgba(10, 10, 15, 0.98)';
+                }
+            } else {
+                if (isLightMode) {
+                    nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                } else {
+                    nav.style.background = 'rgba(10, 10, 15, 0.9)';
+                }
+            }
+        }
+
+        // Initialize mode preference on load
+        window.addEventListener('load', () => {
+            checkModePreference();
+        });
+
+        // Update nav on scroll
+        window.addEventListener('scroll', updateNavBackground);
     </script>
 </body>
 </html>
